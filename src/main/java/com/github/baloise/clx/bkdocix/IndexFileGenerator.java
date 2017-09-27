@@ -19,7 +19,7 @@ import java.util.List;
 public class IndexFileGenerator {
 
 	String template = "BKDOCIX|0000008334|2 |%1$-25s|%2$2s|0|%3$-400s|%4$-4000s|%5$-256s|                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |%6$8s|%7$8s|%8$-256s|        |              | | |M| |02|%1$-25s|          |                                                                                                                        |                         |                                                  |                                |                                                                                                    |50640898                 |                         |                         ";  	
-	
+
 	public String csvToBankDocumentIndex(String csv) {
 		return csvLineToBankDocumentIndex(asList(csv.split("\\R")));
 	}
@@ -65,16 +65,26 @@ public class IndexFileGenerator {
 	}
 	
 	public Path csvToBankDocumentIndex(Path csv, Path outputDirectory) throws IOException {
-		return csvToBankDocumentIndex(csv, outputDirectory, new Date());
+		return csvToBankDocumentIndex(csv, outputDirectory, now());
 	}
 	
-	public Path csvToBankDocumentIndex(Path csv, Path outputDirectory, Date exportStart) throws IOException {
+	public Path csvToBankDocumentIndex(Path csv, Path outputDirectory, String exportStart) throws IOException {
+		assertStringLength(exportStart,16);
 		Path outputFile = outputDirectory.resolve(
 				format("0000000009.host.meldungen.%s.0100.inkr.dat", 
-				new SimpleDateFormat("yyyyMMddHHmmssSS").format(exportStart)
+				exportStart
 				));
 		write(outputFile, csvToBankDocumentIndex(csv).getBytes());
 		return outputFile;
 	}
 
+	private void assertStringLength(String string, int length) {
+		if(string.length() != length) throw new IllegalArgumentException(format("expected '%s' to be of length %s but got length %s", string,length, string.length()));
+	}
+
+	public String now() {
+		Date date = new Date();
+		return new SimpleDateFormat("yyyyMMddHHmmss").format(date) +new SimpleDateFormat("SSS").format(date).substring(0,2);
+	}
+	
 }
