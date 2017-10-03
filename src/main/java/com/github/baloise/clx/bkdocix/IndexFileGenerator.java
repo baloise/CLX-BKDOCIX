@@ -27,10 +27,10 @@ public class IndexFileGenerator {
 	public String csvLineToBankDocumentIndex(Collection<String> csvLines) {
 		int lineNr = 1;
 		List<String> ret = new ArrayList<>(csvLines.size());
+		LocalDate validFrom  = LocalDate.now();
+		LocalDate validUntil = validFrom.plus(1, ChronoUnit.MONTHS);
 		for (String csvLine : csvLines) {
 			String[] vector = csvLine.split(";");
-			LocalDate validFrom  = LocalDate.now();
-			LocalDate validUntil = validFrom.plus(1, ChronoUnit.MONTHS);
 			ret.add(format(template,			//
 					vector[0],         		// 3 DESTINATION_NO        
 					lang(vector[1]),   		// 4 LANG_CD               
