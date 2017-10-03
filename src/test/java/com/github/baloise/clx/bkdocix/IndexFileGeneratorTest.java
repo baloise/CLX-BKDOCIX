@@ -1,7 +1,7 @@
 package com.github.baloise.clx.bkdocix;
 
 import static java.lang.System.getProperty;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,11 +9,11 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.Scanner;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
 
 public class IndexFileGeneratorTest {
 
@@ -21,7 +21,7 @@ public class IndexFileGeneratorTest {
 	IndexFileGenerator generator = new IndexFileGenerator();
 	private Path csv;
 	
-	@BeforeEach
+	@Before
 	public void setUp() throws URISyntaxException {
 		csv = Paths.get(getClass().getResource(REPORT_CSV).toURI());
 	}
