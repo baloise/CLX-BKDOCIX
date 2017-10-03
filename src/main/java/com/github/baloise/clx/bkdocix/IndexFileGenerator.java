@@ -18,17 +18,38 @@ import java.util.List;
 
 public class IndexFileGenerator {
 
-	String template = "BKDOCIX|0000008334|2 |%1$-25s|%2$2s|0|%3$-400s|%4$-4000s|%5$-256s|                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |%6$8s|%7$8s|%8$-256s|        |              | | |M| |02|%1$-25s|          |                                                                                                                        |                         |                                                  |                                |                                                                                                    |50640898                 |                         |                         ";  	
+	String template = "BKDOCIX|0000008334|2 |%1$-25s|%2$2s|0|%3$-400s|%4$-4000s|%5$-256s|                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                |%6$8s|%7$8s|%8$-256s|        |              | | |M| |02|%1$-25s|          |                                                                                                                        |                         |                                                  |                                |                                                                                                    |50640898                 |                         |                         ";
+	private LocalDate validUntil;
+	private LocalDate validFrom;  	
 
+	public LocalDate getValidUntil() {
+		return validUntil;
+	}
+
+	public void setValidUntil(LocalDate validUntil) {
+		this.validUntil = validUntil;
+	}
+
+	public LocalDate getValidFrom() {
+		return validFrom;
+	}
+
+	public void setValidFrom(LocalDate validFrom) {
+		this.validFrom = validFrom;
+	}
+
+	public IndexFileGenerator() {
+		validFrom  = LocalDate.now();
+		validUntil = validFrom.plus(1, ChronoUnit.MONTHS);
+	}
+	
 	public String csvToBankDocumentIndex(String csv) {
 		return csvLineToBankDocumentIndex(asList(csv.split("\\R")));
 	}
-
+	
 	public String csvLineToBankDocumentIndex(Collection<String> csvLines) {
 		int lineNr = 1;
 		List<String> ret = new ArrayList<>(csvLines.size());
-		LocalDate validFrom  = LocalDate.now();
-		LocalDate validUntil = validFrom.plus(1, ChronoUnit.MONTHS);
 		for (String csvLine : csvLines) {
 			String[] vector = csvLine.split(";");
 			ret.add(format(template,			//
