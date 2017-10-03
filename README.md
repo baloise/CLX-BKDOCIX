@@ -8,7 +8,7 @@ cd CLX-BKDOCIX
 
 mvn exec:java -Dexec.args="src\test\resources\csv_report.csv"
 
-## Anwednung
+## Anwendung
 Download https://jitpack.io/com/github/baloise/CLX-BKDOCIX/-SNAPSHOT/CLX-BKDOCIX--SNAPSHOT.jar
 
 java -jar CLX-BKDOCIX-<some git commit hash>.jar
