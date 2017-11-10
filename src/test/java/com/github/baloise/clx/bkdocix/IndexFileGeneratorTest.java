@@ -1,6 +1,7 @@
 package com.github.baloise.clx.bkdocix;
 
 import static java.lang.System.getProperty;
+import static java.nio.file.Paths.get;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
@@ -30,27 +31,14 @@ public class IndexFileGeneratorTest {
 		csv = Paths.get(getClass().getResource(REPORT_CSV).toURI());
 	}
 	
-	@Test
-	public void fromStringEqualsFromPath() throws Exception {
-		String expected = generator.csvToBankDocumentIndex(csv);
-		String actual = generator.csvToBankDocumentIndex(load(REPORT_CSV));
-		assertEquals(expected, actual);
-	}
-	
-	@Test
-	public void toStringEqualstoFile() throws Exception {
-		String expected = generator.csvToBankDocumentIndex(csv);
-		Path index = generator.csvToBankDocumentIndex(csv, Paths.get(getProperty("java.io.tmpdir")));
-		assertEquals(expected, load(index));
-		index.toFile().deleteOnExit();
-	}
 	
 	@Test
 	public void test() throws Exception {
+		Path bankDocumentIndex = generator.csvToBankDocumentIndex(csv, get(getProperty("java.io.tmpdir")));
 		String expected = load("/expected.dat").replaceAll("\\R", "\n");
-		String actual = generator.csvToBankDocumentIndex(csv);
-		assertEquals(actual, actual);
+		String actual = load(bankDocumentIndex).replaceAll("\\R", "\n");
 		System.out.println(actual);
+		bankDocumentIndex.toFile().delete();
 		assertEquals(expected, actual);
 	}
 	
