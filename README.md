@@ -2,16 +2,18 @@
 CREALOGIX Bank Document Index generator
 
 ## Entwicklung
+```
 git clone https://github.com/baloise/CLX-BKDOCIX.git
 
 cd CLX-BKDOCIX
 
 mvn exec:java -Dexec.args="src\test\resources\csv_report.csv"
+```
 
 ## Anwendung
 Download https://jitpack.io/com/github/baloise/CLX-BKDOCIX/-SNAPSHOT/CLX-BKDOCIX--SNAPSHOT.jar
 
-java -jar CLX-BKDOCIX-<some git commit hash>.jar
+```java -jar CLX-BKDOCIX-<some git commit hash>.jar```
 
 Latest jitpack info can be found at
 
